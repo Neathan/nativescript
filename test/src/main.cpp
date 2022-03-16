@@ -5,7 +5,7 @@
 int main() {
 	using namespace ns;
 
-	auto collection = ScriptCollection::create("C:\\Users\\jonat\\Desktop\\nativescript\\out\\build\\x64-Debug\\test_lib\\testlib.dll");
+	auto collection = ScriptCollection::create("testlib.dll");
 	if (collection) {
 		for (const auto& script : collection->getScripts()) {
 			printf("Script name: %s\n", script.name.c_str());
