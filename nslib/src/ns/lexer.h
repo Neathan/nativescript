@@ -1,0 +1,39 @@
+#pragma once
+
+#include <string>
+#include <vector>
+
+namespace ns {
+
+	enum class TokenType {
+		ERROR_TYPE = 0,
+
+		PROPERTY, FUNCTION_PROP, CLASS_PROP, STRUCT_PROP,
+		CLASS_KW, STRUCT_KW, COLON,
+
+		LEFT_PAREN, RIGHT_PAREN, LEFT_BRACKET, RIGHT_BRACKET,
+		NUMBER_SIGN, SEMICOLON, EQUAL,
+		PLUS_EQUAL, MINUS_EQUAL, TIMES_EQUAL, DIV_EQUAL, MODULO_EQUAL,
+		CARET_EQUAL, AMPERSAND_EQUAL, BAR_EQUAL, RIGHT_SHIFT_EQUAL, LEFT_SHIFT_EQUAL,
+		EQUAL_EQUAL, EXCLAMATION_EQUAL, LESS_THAN_EQUAL, GREATER_THAN_EQUAL,
+
+		IDENTIFIER, CONST_KW, AUTO_KW,
+
+		ASTERIX, AMPERSAND, LEFT_ANGLE_BRACKET, RIGHT_ANGLE_BRACKET,
+
+		STRING_LITERAL, NUMBER, TRUE_KW, FALSE_KW,
+
+		END_OF_FILE
+	};
+
+	struct Token {
+		TokenType type;
+
+		int line;
+		int column;
+		std::string lexeme;
+	};
+
+	std::vector<Token> lex(const std::string& content);
+
+}
