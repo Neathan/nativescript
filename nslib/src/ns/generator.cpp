@@ -211,16 +211,18 @@ namespace ns {
 
 	void processDirectory(fs::path path, const fs::path& projectRoot, const fs::path& outputRoot, std::vector<ScriptInfo>& projectScripts) {
 		for (const auto& entry : fs::directory_iterator(path)) {
+			fs::path entryPath = fs::absolute(entry.path());
+
 			if (entry.is_regular_file()) {
-				if (isIn(entry.path().extension(), ".h", ".hpp")) {
-					processHeaderFile(entry.path(), projectRoot, outputRoot, projectScripts);
+				if (isIn(entryPath.extension(), ".h", ".hpp")) {
+					processHeaderFile(entryPath, projectRoot, outputRoot, projectScripts);
 				}
-				else if (isIn(entry.path().extension(), ".cpp", ".cc", ".cxx")) {
-					processSourceFile(entry.path(), projectRoot, outputRoot);
+				else if (isIn(entryPath.extension(), ".cpp", ".cc", ".cxx")) {
+					processSourceFile(entryPath, projectRoot, outputRoot);
 				}
 			}
 			else if (entry.is_directory()) {
-				processDirectory(entry.path(), projectRoot, outputRoot, projectScripts);
+				processDirectory(entryPath, projectRoot, outputRoot, projectScripts);
 			}
 		}
 	}
