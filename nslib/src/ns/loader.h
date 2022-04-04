@@ -2,8 +2,9 @@
 
 #include "ns.h"
 
-#include <vector>
 #include <string>
+#include <vector>
+#include <unordered_map>
 
 #include <optional>
 
@@ -113,20 +114,20 @@ namespace ns {
 
 	class ScriptCollection {
 	public:
-		ScriptCollection(void* handle, GetGeneratedScriptsFn scriptInfoFunc, const std::vector<ScriptInterface>& scripts)
+		ScriptCollection(void* handle, GetGeneratedScriptsFn scriptInfoFunc, const std::unordered_map<std::string, ScriptInterface>& scripts)
 			: m_handle(handle), m_scriptInfoFunc(scriptInfoFunc), m_scripts(scripts) {}
-
-		ScriptCollection(ScriptCollection&&) = default;
 		~ScriptCollection();
 
-		const std::vector<ScriptInterface>& getScripts() const { return m_scripts; }
+		const std::unordered_map<std::string, ScriptInterface>& getScripts() const { return m_scripts; }
+		const ScriptInterface& getScriptInterface(const std::string& name) const { return m_scripts.at(name); }
 
-		static std::optional<ScriptCollection> create(const char* path);
+		static std::optional<ScriptCollection> create(const std::string& path);
+
 	private:
 		void* m_handle = nullptr;
 		GetGeneratedScriptsFn m_scriptInfoFunc = nullptr;
 
-		std::vector<ScriptInterface> m_scripts;
+		std::unordered_map<std::string, ScriptInterface> m_scripts;
 	};
 
 }

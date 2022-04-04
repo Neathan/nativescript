@@ -14,7 +14,7 @@ namespace ns {
 		return func;
 	}
 
-	std::optional<ScriptCollection> ScriptCollection::create(const char* path) {
+	std::optional<ScriptCollection> ScriptCollection::create(const std::string& path) {
 		namespace fs = std::filesystem;
 
 		fs::path filePath = fs::absolute(path);
@@ -34,7 +34,7 @@ namespace ns {
 		ScriptInfo* scripts;
 		scriptInfoFunc(&count, &scripts);
 
-		std::vector<ScriptInterface> interfaces;
+		std::unordered_map<std::string, ScriptInterface> interfaces;
 
 		// Create script interfaces
 		for (int i = 0; i < count; ++i) {
@@ -61,7 +61,7 @@ namespace ns {
 			assert(createFunc);
 			assert(destroyFunc);
 
-			interfaces.emplace_back(ScriptInterface{ info.name, parameters, functions, createFunc, destroyFunc });
+			interfaces.emplace(info.name, ScriptInterface{ info.name, parameters, functions, createFunc, destroyFunc });
 		}
 
 		return std::make_optional<ScriptCollection>(handle, scriptInfoFunc, interfaces);
