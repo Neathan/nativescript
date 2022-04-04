@@ -7,8 +7,8 @@ int main() {
 
 	auto collection = ScriptCollection::create("testlib.dll");
 	if (collection) {
-		for (const auto& script : collection->getScripts()) {
-			printf("Script name: %s\n", script.name.c_str());
+		for (const auto& [name, script] : collection->getScripts()) {
+			printf("Script name: %s\n", name.c_str());
 
 			Script* s = script.createScriptFunc();
 			s->start();
