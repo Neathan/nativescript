@@ -4,9 +4,8 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <unordered_map>
-
-#include <optional>
 
 #ifdef _WIN32
 	#include <windows.h>
@@ -121,7 +120,7 @@ namespace ns {
 		const std::unordered_map<std::string, ScriptInterface>& getScripts() const { return m_scripts; }
 		const ScriptInterface& getScriptInterface(const std::string& name) const { return m_scripts.at(name); }
 
-		static std::optional<ScriptCollection> create(const std::string& path);
+		static std::shared_ptr<ScriptCollection> create(const std::string& path);
 
 	private:
 		void* m_handle = nullptr;

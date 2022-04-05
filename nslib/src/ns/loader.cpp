@@ -14,7 +14,7 @@ namespace ns {
 		return func;
 	}
 
-	std::optional<ScriptCollection> ScriptCollection::create(const std::string& path) {
+	std::shared_ptr<ScriptCollection> ScriptCollection::create(const std::string& path) {
 		namespace fs = std::filesystem;
 
 		fs::path filePath = fs::absolute(path);
@@ -22,7 +22,7 @@ namespace ns {
 		// Load DLL
 		void* handle = LoadLibraryA(filePath.generic_string().c_str());
 		if (!handle) {
-			return std::nullopt;
+			return nullptr;
 		}
 
 		// Retrieve content info
@@ -64,7 +64,7 @@ namespace ns {
 			interfaces.emplace(info.name, ScriptInterface{ info.name, parameters, functions, createFunc, destroyFunc });
 		}
 
-		return std::make_optional<ScriptCollection>(handle, scriptInfoFunc, interfaces);
+		return std::make_shared<ScriptCollection>(handle, scriptInfoFunc, interfaces);
 	}
 
 	ScriptCollection::~ScriptCollection() {
