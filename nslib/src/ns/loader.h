@@ -38,61 +38,41 @@ namespace ns {
 		void* getFunc = nullptr;
 		void* setFunc = nullptr;
 
-		template<typename T>
-		T get(Script* script) const {
-			//static_assert(false, "Get function unimplemented for type");
-			return T{};
-		}
-		template<>
-		int get(Script* script) const {
+		int getInt(Script* script) const {
 			return ((GetIntFn)getFunc)(script);
 		}
-		template<>
-		char get(Script* script) const {
+		char getChar(Script* script) const {
 			return ((GetCharFn)getFunc)(script);
 		}
-		template<>
-		bool get(Script* script) const {
+		bool getBool(Script* script) const {
 			return ((GetBoolFn)getFunc)(script);
 		}
-		template<>
-		float get(Script* script) const {
+		float getFloat(Script* script) const {
 			return ((GetFloatFn)getFunc)(script);
 		}
-		template<>
-		double get(Script* script) const {
+		double getDouble(Script* script) const {
 			return ((GetDoubleFn)getFunc)(script);
 		}
-		template<>
-		wchar_t get(Script* script) const {
+		wchar_t getWChar(Script* script) const {
 			return ((GetWCharFn)getFunc)(script);
 		}
 
-		template<typename T>
-		void set(Script* script, T value) const {
-			static_assert(false, "Set function unimplemented for type");
-		}
-		template<>
+
 		void set(Script* script, int value) const {
 			((SetIntFn)setFunc)(script, value);
 		}
-		template<>
 		void set(Script* script, char value) const {
 			((SetCharFn)setFunc)(script, value);
 		}
-		template<>
 		void set(Script* script, bool value) const {
 			((SetBoolFn)setFunc)(script, value);
 		}
-		template<>
 		void set(Script* script, float value) const {
 			((SetFloatFn)setFunc)(script, value);
 		}
-		template<>
 		void set(Script* script, double value) const {
 			((SetDoubleFn)setFunc)(script, value);
 		}
-		template<>
 		void set(Script* script, wchar_t value) const {
 			((SetWCharFn)setFunc)(script, value);
 		}

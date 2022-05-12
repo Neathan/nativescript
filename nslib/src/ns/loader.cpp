@@ -5,6 +5,7 @@
 
 namespace ns {
 
+#ifdef _WIN32
 	static FARPROC __stdcall tryLoadFunction(HMODULE module, const char* functionName) {
 		auto func = GetProcAddress(module, functionName);
 		if (func == NULL) {
@@ -13,8 +14,10 @@ namespace ns {
 
 		return func;
 	}
+#endif
 
 	std::shared_ptr<ScriptCollection> ScriptCollection::create(const std::string& path) {
+#ifdef _WIN32
 		namespace fs = std::filesystem;
 
 		fs::path filePath = fs::absolute(path);
@@ -65,13 +68,18 @@ namespace ns {
 		}
 
 		return std::make_shared<ScriptCollection>(handle, scriptInfoFunc, interfaces);
+#else
+		return nullptr;
+#endif
 	}
 
 	ScriptCollection::~ScriptCollection() {
+#ifdef _WIN32
 		if (m_handle && !FreeLibrary((HMODULE)m_handle)) {
 			DWORD errorCode = GetLastError();
 			printf("Failed to free dll. Error code: %ld\n", errorCode);
 		}
+#endif
 	}
 
 }
