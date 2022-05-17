@@ -38,22 +38,22 @@ namespace ns {
 		void* getFunc = nullptr;
 		void* setFunc = nullptr;
 
-		int getInt(Script* script) const {
+		int getAsInt(Script* script) const {
 			return ((GetIntFn)getFunc)(script);
 		}
-		char getChar(Script* script) const {
+		char getAsChar(Script* script) const {
 			return ((GetCharFn)getFunc)(script);
 		}
-		bool getBool(Script* script) const {
+		bool getAsBool(Script* script) const {
 			return ((GetBoolFn)getFunc)(script);
 		}
-		float getFloat(Script* script) const {
+		float getAsFloat(Script* script) const {
 			return ((GetFloatFn)getFunc)(script);
 		}
-		double getDouble(Script* script) const {
+		double getAsDouble(Script* script) const {
 			return ((GetDoubleFn)getFunc)(script);
 		}
-		wchar_t getWChar(Script* script) const {
+		wchar_t getAsWChar(Script* script) const {
 			return ((GetWCharFn)getFunc)(script);
 		}
 
